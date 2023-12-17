@@ -8,15 +8,20 @@ using TMPro;
 public class TextWiggle : MonoBehaviour
 {
     public float duration = 3f;
-    public float startAngle = 5f;
+    public float angle = 5f;
 
     public GameObject textBox;
+    Sequence DOTwiggle;
 
     void Start()
     {
         RectTransform rect = GetComponent<RectTransform>();
-        rect.rotation = Quaternion.Euler(0f, 0f, startAngle);
-        rect.DORotate(new Vector3(0, 0, -startAngle), duration).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+
+        DOTwiggle = DOTween.Sequence();
+        DOTwiggle.Append(rect.DORotate(new Vector3(0, 0, -angle), duration / 4).SetEase(Ease.OutSine));
+        DOTwiggle.Append(rect.DORotate(new Vector3(0, 0, angle), duration / 2).SetEase(Ease.InOutSine));
+        DOTwiggle.Append(rect.DORotate(new Vector3(0, 0, 0), duration / 4).SetEase(Ease.InSine));
+        DOTwiggle.SetLoops(-1).SetUpdate(true);
     }
 
 }

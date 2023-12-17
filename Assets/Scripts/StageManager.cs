@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 public class StageManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class StageManager : MonoBehaviour
     public int stageRate;       //The number of stages needed before stages change
     int stagesUntilChange;
     [SerializeField] int lostTalents;            //Number of talents still on the play field
+    int genLeft;
+    int genRight;
 
     public GameObject[] talents;    //The talents in order of generation (will update in a doc if it gets bigger)
     public TextMeshProUGUI[] zoneText;
@@ -85,12 +88,23 @@ public class StageManager : MonoBehaviour
         switch (stage)
         {
             case StageType.generation:
-                validTalents.Add(talents[0]);   //Gura
-                validTalents.Add(talents[1]);   //Bae
+                if(genLeft == 0 || genRight == 0)   //Myth
+                {
+                    validTalents.Add(talents[0]);   //Gura
+                }
+                if(genLeft == 1 || genRight == 1)   //Promise
+                {
+                    validTalents.Add(talents[1]);   //Bae
+                }
+                if(genLeft == 2 || genRight == 2)
+                {
+                    validTalents.Add(talents[2]);   //Mococo
+                }
 
                 for(int i = 0; i < 3; i++)
                 {
-                    Instantiate(validTalents[Random.Range(0, validTalents.Count)], spawnPoints[0].position, Quaternion.identity);
+                    GameObject talent = Instantiate(validTalents[Random.Range(0, validTalents.Count)], spawnPoints[0].position, Quaternion.identity);
+                    talent.GetComponent<Talent>().SetZ(Random.Range(0, 50f));
                     lostTalents++;
                 }
                 zones[0].GetComponent<Zone>().SetStage(0);
@@ -99,10 +113,12 @@ public class StageManager : MonoBehaviour
             case StageType.boing:
                 validTalents.Add(talents[0]);   //Gura
                 validTalents.Add(talents[1]);   //Bae
+                validTalents.Add(talents[2]);   //Mococo
 
                 for (int i = 0; i < 3; i++)
                 {
-                    Instantiate(validTalents[Random.Range(0, validTalents.Count)], spawnPoints[0].position, Quaternion.identity);
+                    GameObject talent = Instantiate(validTalents[Random.Range(0, validTalents.Count)], spawnPoints[0].position, Quaternion.identity);
+                    talent.GetComponent<Talent>().SetZ(Random.Range(0, 50f));
                     lostTalents++;
                 }
                 zones[0].GetComponent<Zone>().SetStage(1);
@@ -111,10 +127,12 @@ public class StageManager : MonoBehaviour
             case StageType.kemomimi:
                 validTalents.Add(talents[0]);   //Gura
                 validTalents.Add(talents[1]);   //Bae
+                validTalents.Add(talents[2]);   //Mococo
 
                 for (int i = 0; i < 3; i++)
                 {
-                    Instantiate(validTalents[Random.Range(0, validTalents.Count)], spawnPoints[0].position, Quaternion.identity);
+                    GameObject talent = Instantiate(validTalents[Random.Range(0, validTalents.Count)], spawnPoints[0].position, Quaternion.identity);
+                    talent.GetComponent<Talent>().SetZ(Random.Range(0, 50f));
                     lostTalents++;
                 }
                 zones[0].GetComponent<Zone>().SetStage(2);
@@ -130,11 +148,10 @@ public class StageManager : MonoBehaviour
         switch (stageType)
         {
             case StageType.generation:
-                int genLeft = Random.Range(0, 2);   //Will change depending on number of gens
-                int genRight;
+                genLeft = Random.Range(0, 3);   //Will change depending on number of gens
                 do
                 {
-                    genRight = Random.Range(0, 2);  //Same as above
+                    genRight = Random.Range(0, 3);  //Same as above
                 } while (genRight == genLeft);      //Repeat until both are different
 
                 switch (genLeft)
@@ -190,6 +207,9 @@ public class StageManager : MonoBehaviour
                 break;
         }//end of stage initialization
 
+         //Spin text
+        zoneText[0].GetComponentInParent<RectTransform>().DORotate(new Vector3(0, 0, 1080), 1f, RotateMode.FastBeyond360).SetEase(Ease.InOutBack);
+        zoneText[1].GetComponentInParent<RectTransform>().DORotate(new Vector3(0, 0, 1080), 1f, RotateMode.FastBeyond360).SetEase(Ease.InOutBack);
 
     }
 

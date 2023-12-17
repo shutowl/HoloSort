@@ -41,6 +41,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BG
+    uniqueID: 180298995
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Talents
+    uniqueID: 32225503
+    locked: 0
+  - name: FG
+    uniqueID: 3457609149
     locked: 0

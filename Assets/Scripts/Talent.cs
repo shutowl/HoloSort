@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;  //Documentation: https://dotween.demigiant.com/documentation.php
+using UnityEngine.SceneManagement;
 
 public class Talent : MonoBehaviour
 {
@@ -19,6 +21,16 @@ public class Talent : MonoBehaviour
     public float maxSpeed = 3f;
     public float minSpeed = 5f;
     bool pickable = true;               //determines whether they can be picked up with mouse inputs
+    public float wiggleAngle = 5f;      //When held, determines how far talent wiggles
+    public float wiggleDuration = 1f;   //When held, determines how long each wiggle cycle is
+    Sequence DOTwiggle;
+
+    float stuckTime = 0.1f;             //If talent gets stuck in the wall, reset them
+    float stuckTimer;
+    bool visible;
+
+    Sprite walkSprite;
+    Sprite heldSprite;
 
     [Header("Filters")]
     [SerializeField] Generation gen;
@@ -37,9 +49,17 @@ public class Talent : MonoBehaviour
         speed = Random.Range(minSpeed, maxSpeed);
         state = State.moving;
         timer = startTime;
+        stuckTimer = stuckTime;
         pickable = true;
 
         stageManager = FindObjectOfType<StageManager>();
+
+        DOTwiggle = DOTween.Sequence();
+        DOTwiggle.Append(transform.DORotate(new Vector3(0, 0, -wiggleAngle), wiggleDuration / 4).SetEase(Ease.OutSine));
+        DOTwiggle.Append(transform.DORotate(new Vector3(0, 0, wiggleAngle), wiggleDuration / 2).SetEase(Ease.InOutSine));
+        DOTwiggle.Append(transform.DORotate(new Vector3(0, 0, 0), wiggleDuration / 4).SetEase(Ease.InSine));
+        DOTwiggle.SetLoops(-1);
+        DOTwiggle.Pause();
     }
 
     void Update()
@@ -52,6 +72,7 @@ public class Talent : MonoBehaviour
         else
         {
             //Lose animations
+            DOTwiggle.Kill();
             Destroy(this.gameObject); //temporary destroy
         }
     }
@@ -64,11 +85,29 @@ public class Talent : MonoBehaviour
         }
         if(state == State.grabbed)
         {
-            //Follow mouse
-            transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //play grabbed animation
+            //Smoothly follow mouse
+            Vector3 mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 smoothedPos = Vector3.Lerp(transform.position, mousePos, 15f * Time.deltaTime);
+            transform.position = smoothedPos;
+        }
+
+        //Check if talent offscreen
+        if (!visible && SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            if (stuckTimer >= 0)
+            {
+                stuckTimer -= Time.deltaTime;
+            }
+            else
+            {
+                stuckTimer = stuckTime;
+                transform.position = Vector2.zero;
+            }
         }
     }
+
+    private void OnBecameVisible() { visible = true; }
+    private void OnBecameInvisible() { visible = false; }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
@@ -106,6 +145,9 @@ public class Talent : MonoBehaviour
         {
             ChangeState(1);
             GetComponent<BoxCollider2D>().enabled = false;
+
+            //Talent wiggles a bit while held
+            DOTwiggle.Play();
         }
     }
 
@@ -116,7 +158,18 @@ public class Talent : MonoBehaviour
         {
             ChangeState(0);
             GetComponent<BoxCollider2D>().enabled = true;
+
+            //Reset rotation from wiggles
+            transform.rotation = Quaternion.Euler(Vector3.zero);
+            DOTwiggle.Restart();
+            DOTwiggle.Pause();
         }
+    }
+
+    //Change Layer Order number
+    public void SetZ(float z)
+    {
+        transform.position = new Vector3(transform.position.x, transform.position.y, z);
     }
 
 
@@ -167,4 +220,38 @@ public class Talent : MonoBehaviour
 
         //Destroy(this.gameObject);   //temporary destroy
     }
+
+    private void OnTriggerStay2D(Collider2D col)
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            if (col.CompareTag("Wall"))
+            {
+                if (stuckTimer >= 0)
+                {
+                    stuckTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    stuckTimer = stuckTime;
+
+                    if (pickable)                       //Stuck outside of zones
+                    {
+                        transform.position = Vector2.zero;
+                    }
+                    else if (transform.position.x > 0)   //Stuck in right zone
+                    {
+                        transform.position = new Vector2(11.5f, 0);
+                    }
+                    else                                //Stuck in left zone
+                    {
+                        transform.position = new Vector2(-11.5f, 0);
+                    }
+
+                }
+            }
+        }
+    }
+
+
 }
