@@ -20,37 +20,57 @@ public class Talent : MonoBehaviour
     float speed;
     public float maxSpeed = 3f;
     public float minSpeed = 5f;
+    bool scorable = true;               //attempts to fix a bug where 1 talent can be scored twice
     bool pickable = true;               //determines whether they can be picked up with mouse inputs
     public float wiggleAngle = 5f;      //When held, determines how far talent wiggles
     public float wiggleDuration = 1f;   //When held, determines how long each wiggle cycle is
+    public float walkAngle = 3f;
+    public float walkDuration = 0.5f;
+    public float walkDistance = 0.3f;
     Sequence DOTwiggle;
+
+    bool warning = false;
+    public float warningTime = 2f;          //The warning will pop after when there's only this much time left
+    public float warningFlashRate = 0.2f;   //The warning indicator will flash every X seconds.
+    public GameObject warningIndicator;
+    Sequence DOTwarning;
+
+    public GameObject sprite;
+    public Sprite walkSprite;
+    public Sprite heldSprite;
+    Sequence DOTwalk;
+
 
     float stuckTime = 0.1f;             //If talent gets stuck in the wall, reset them
     float stuckTimer;
     bool visible;
 
-    Sprite walkSprite;
-    Sprite heldSprite;
+    Vector3 startDirection;
+    Vector3 curDirection;
+    public bool startRandomDirection = false;
 
     [Header("Filters")]
     [SerializeField] Generation gen;
     public bool kemomimi = false;
     public bool boing = false;
 
-    Vector3 startDirection;
-    Vector3 curDirection;
-
     StageManager stageManager;
+
 
     void Start()
     {
         startDirection = new Vector3(Random.Range(-4f, 4f), -5f).normalized;
         curDirection = startDirection;
+        if(startRandomDirection) { curDirection = new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f)); }
+        CheckDirection();
+
         speed = Random.Range(minSpeed, maxSpeed);
         state = State.moving;
         timer = startTime;
         stuckTimer = stuckTime;
         pickable = true;
+        warningIndicator.SetActive(false);
+        warning = false;
 
         stageManager = FindObjectOfType<StageManager>();
 
@@ -60,6 +80,21 @@ public class Talent : MonoBehaviour
         DOTwiggle.Append(transform.DORotate(new Vector3(0, 0, 0), wiggleDuration / 4).SetEase(Ease.InSine));
         DOTwiggle.SetLoops(-1);
         DOTwiggle.Pause();
+
+        DOTwalk = DOTween.Sequence();
+        DOTwalk.Append(sprite.transform.DORotate(new Vector3(0, 0, -walkAngle), walkDuration/4).SetEase(Ease.OutCubic));
+            DOTwalk.Join(sprite.transform.DOLocalMoveY(-walkDistance, walkDuration / 4).SetEase(Ease.OutSine));
+        DOTwalk.Append(sprite.transform.DORotate(new Vector3(0, 0, 0), walkDuration / 4).SetEase(Ease.Linear));
+            DOTwalk.Join(sprite.transform.DOLocalMoveY(0f, walkDuration / 4).SetEase(Ease.Linear));
+        DOTwalk.Append(sprite.transform.DORotate(new Vector3(0, 0, walkAngle), walkDuration / 4).SetEase(Ease.OutCubic));
+            DOTwalk.Join(sprite.transform.DOLocalMoveY(-walkDistance, walkDuration / 4).SetEase(Ease.OutSine));
+        DOTwalk.Append(sprite.transform.DORotate(new Vector3(0, 0, 0), walkDuration / 4).SetEase(Ease.Linear));
+            DOTwalk.Join(sprite.transform.DOLocalMoveY(0f, walkDuration / 4).SetEase(Ease.Linear));
+        DOTwalk.SetLoops(-1);
+
+        DOTwarning = DOTween.Sequence();
+        DOTwarning.Append(sprite.GetComponent<SpriteRenderer>().DOColor(Color.red, warningTime)).SetEase(Ease.Flash, 15);
+        DOTwarning.Pause();
     }
 
     void Update()
@@ -74,6 +109,11 @@ public class Talent : MonoBehaviour
             //Lose animations
             DOTwiggle.Kill();
             Destroy(this.gameObject); //temporary destroy
+        }
+
+        if(timer <= warningTime && !warning)
+        {
+            DisplayWarning(true);
         }
     }
 
@@ -122,6 +162,33 @@ public class Talent : MonoBehaviour
     {
         // Reflect the movement direction based on the obstacle's normal
         curDirection = Vector2.Reflect(curDirection, normal).normalized;
+        CheckDirection();
+    }
+
+    void DisplayWarning(bool on)
+    {
+        warning = true;
+        //warningIndicator.SetActive(on);
+        /*
+        float warningAngle = 20f;
+        float warningDuration = 0.5f;
+
+        DOTwarning.Append(warningIndicator.transform.DORotate(new Vector3(0, 0, -warningAngle), warningDuration / 4).SetEase(Ease.OutSine));
+        DOTwarning.Append(warningIndicator.transform.DORotate(new Vector3(0, 0, warningAngle), warningDuration / 2).SetEase(Ease.InOutSine));
+        DOTwarning.Append(warningIndicator.transform.DORotate(new Vector3(0, 0, 0), warningDuration / 4).SetEase(Ease.InSine));
+        DOTwarning.SetLoops(-1);
+        */
+
+        //Make warning flash?
+        //DOTwarning.Append(sprite.GetComponent<SpriteRenderer>().DOColor(Color.white, warningFlashRate)).SetEase(Ease.Flash, 1, 0);
+        //DOTwarning.SetLoops(-1);
+
+        if(on) DOTwarning.Play();
+        else
+        {
+            DOTwarning.Restart();
+            DOTwarning.Kill();
+        }
     }
 
 
@@ -129,13 +196,22 @@ public class Talent : MonoBehaviour
     {
         this.state = (State)state;
 
-        if (state == 1) //put back down
+        if (state == 1) //pick up
         {
-            //Check if in correct zone
-
             //Move in random direction
             curDirection = new Vector2(Random.Range(-5f, 5f), Random.Range(-5f, 5f)).normalized;
         }
+        else
+        {
+            CheckDirection();
+        }
+    }
+
+    //Flips the sprite if going a certain direction
+    void CheckDirection()
+    {
+        if (curDirection.x <= 0) { sprite.GetComponent<SpriteRenderer>().flipX = false; }
+        else { sprite.GetComponent<SpriteRenderer>().flipX = true; }
     }
 
     //Talent grabbed
@@ -145,9 +221,15 @@ public class Talent : MonoBehaviour
         {
             ChangeState(1);
             GetComponent<BoxCollider2D>().enabled = false;
+            sprite.GetComponent<SpriteRenderer>().sprite = heldSprite;
 
             //Talent wiggles a bit while held
             DOTwiggle.Play();
+
+            DOTwalk.Restart();
+            DOTwalk.Pause();
+
+            AudioManager.Instance.Play("Grab");
         }
     }
 
@@ -158,9 +240,14 @@ public class Talent : MonoBehaviour
         {
             ChangeState(0);
             GetComponent<BoxCollider2D>().enabled = true;
+            sprite.GetComponent<SpriteRenderer>().sprite = walkSprite;
 
             //Reset rotation from wiggles
             transform.rotation = Quaternion.Euler(Vector3.zero);
+
+            //Walk animation
+            DOTwalk.Play();
+
             DOTwiggle.Restart();
             DOTwiggle.Pause();
         }
@@ -175,7 +262,7 @@ public class Talent : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag("Zone"))
+        if (col.CompareTag("Zone") && scorable)
         {
             Zone zone = col.GetComponent<Zone>();
 
@@ -216,6 +303,8 @@ public class Talent : MonoBehaviour
                     break;
             }
             pickable = false;
+            scorable = false;
+            DisplayWarning(false);
         }
 
         //Destroy(this.gameObject);   //temporary destroy
@@ -241,11 +330,11 @@ public class Talent : MonoBehaviour
                     }
                     else if (transform.position.x > 0)   //Stuck in right zone
                     {
-                        transform.position = new Vector2(11.5f, 0);
+                        transform.position = new Vector2(13.5f, 0);
                     }
                     else                                //Stuck in left zone
                     {
-                        transform.position = new Vector2(-11.5f, 0);
+                        transform.position = new Vector2(-13.5f, 0);
                     }
 
                 }

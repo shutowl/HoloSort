@@ -32,4 +32,9 @@ public class MenuManager : MonoBehaviour
     {
 
     }
+
+    public void MouseOverButton()
+    {
+        AudioManager.Instance.Play("MenuClick");
+    }
 }

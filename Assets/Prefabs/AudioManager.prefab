@@ -243,4 +243,6 @@ MonoBehaviour:
   sounds:
   - name: MenuClick
     clip: {fileID: 8300000, guid: 7146075854e471c4a97ba69deca206e4, type: 3}
+  - name: Grab
+    clip: {fileID: 8300000, guid: 24e9da07122b0684abdd248397aefced, type: 3}
   music: []

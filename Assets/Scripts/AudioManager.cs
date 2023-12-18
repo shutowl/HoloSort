@@ -15,7 +15,7 @@ public class AudioManager : MonoBehaviour
 	public Sound[] music;
 	AudioClip currentClip;
 
-	/*
+	
 	// Initialize the singleton instance.
 	private void Awake()
 	{
@@ -32,7 +32,7 @@ public class AudioManager : MonoBehaviour
 			Destroy(gameObject);
 		}
 	}
-	*/
+	
 
 	// Play a single clip through the sound effects source.
 	public void Play(string name)

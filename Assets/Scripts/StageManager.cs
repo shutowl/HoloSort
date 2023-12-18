@@ -22,7 +22,7 @@ public class StageManager : MonoBehaviour
     public TextMeshProUGUI[] zoneText;
     public Transform[] spawnPoints;   //Points at where talents will spawn
 
-    [SerializeField] int level = 1;
+    [SerializeField] int level = 0;
 
     [SerializeField] int score = 0;
     public TextMeshProUGUI scoreText;
@@ -49,8 +49,6 @@ public class StageManager : MonoBehaviour
         if(spawnTimer < 0 || lostTalents <= 0)
         {
 
-            level++;
-
             if (delayTimer <= 0)
             {
                 spawnTimer = spawnRate;
@@ -67,6 +65,7 @@ public class StageManager : MonoBehaviour
                 }
                 //Spawn more talents
                 SpawnTalents(stageType);
+                level++;
             }
             else
             {
