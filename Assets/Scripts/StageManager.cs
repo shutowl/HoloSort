@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 public class StageManager : MonoBehaviour
@@ -28,12 +29,18 @@ public class StageManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public GameObject[] zones;
 
+    [Header("Game Over Variables")]
+    public GameObject gameOverMenu;
+    public TextMeshProUGUI gameOverScoreText;
+
     void Start()
     {
         //Initialize variables
         spawnTimer = 1f;
         stagesUntilChange = stageRate;
         scoreText.text = "Score: 0";
+
+        gameOverMenu.SetActive(false);
 
         //Start Text animations
 
@@ -215,8 +222,17 @@ public class StageManager : MonoBehaviour
     public void UpdateScore(int points)
     {
         //Maybe play an animation too
-        score += points;
-        scoreText.text = "Score: " + this.score;
+        if(points > 0)
+        {
+            score += points;
+            scoreText.text = "Score: " + score;
+        }
+        else
+        {
+            gameOverMenu.SetActive(true);
+            gameOverScoreText.text = "Score: " + score;
+            Time.timeScale = 0;
+        }
     }
 
     public void UpdateLostTalents(int num)
@@ -227,5 +243,11 @@ public class StageManager : MonoBehaviour
     public StageType GetStageType()
     {
         return stageType;
+    }
+
+    public void ReturnToMainMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
     }
 }

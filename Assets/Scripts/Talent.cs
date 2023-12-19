@@ -16,6 +16,7 @@ public class Talent : MonoBehaviour
     [SerializeField] State state;
     [Header("Main Variables")]
     public float startTime = 10f;     //initialize "fuse" time
+    public float zoneTime = 20f;      //Amount of time talents wander around the zone
     float timer;
     float speed;
     public float maxSpeed = 3f;
@@ -61,7 +62,7 @@ public class Talent : MonoBehaviour
     {
         startDirection = new Vector3(Random.Range(-4f, 4f), -5f).normalized;
         curDirection = startDirection;
-        if(startRandomDirection) { curDirection = new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f)); }
+        if(startRandomDirection) { curDirection = new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f)).normalized; }
         CheckDirection();
 
         speed = Random.Range(minSpeed, maxSpeed);
@@ -106,9 +107,9 @@ public class Talent : MonoBehaviour
         }
         else
         {
-            //Lose animations
-            DOTwiggle.Kill();
-            Destroy(this.gameObject); //temporary destroy
+            DOTwiggle.Kill();               //Remove animations
+            if (scorable) { stageManager.UpdateScore(-1); }  //Game Over
+            Destroy(this.gameObject);       //temporary destroy
         }
 
         if(timer <= warningTime && !warning)
@@ -272,6 +273,7 @@ public class Talent : MonoBehaviour
                     if (zone.GetGenType() == (int)gen)
                     {
                         stageManager.UpdateScore(1);
+                        timer = zoneTime;
                     }
                     else
                     {
@@ -283,6 +285,7 @@ public class Talent : MonoBehaviour
                     if (zone.GetBoing() == boing)
                     {
                         stageManager.UpdateScore(1);
+                        timer = zoneTime;
                     }
                     else
                     {
@@ -294,6 +297,7 @@ public class Talent : MonoBehaviour
                     if (zone.GetKemomimi() == kemomimi)
                     {
                         stageManager.UpdateScore(1);
+                        timer = zoneTime;
                     }
                     else
                     {
