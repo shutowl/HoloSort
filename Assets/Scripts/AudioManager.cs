@@ -72,10 +72,13 @@ public class AudioManager : MonoBehaviour
 		{
 			if (name.Equals(music[i].name))
 			{
-				clip = music[i].clip;
-				musicSource.Stop();
-				musicSource.PlayOneShot(clip);
-				break;
+                if (!musicSource.isPlaying)
+                {
+					clip = music[i].clip;
+					musicSource.Stop();
+					musicSource.PlayOneShot(clip);
+					break;
+				}
 			}
 		}
 		if (clip == null)

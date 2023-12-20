@@ -14,6 +14,7 @@ public class StageManager : MonoBehaviour
     public float delayTime;     //The delay before more talents spawn
     float delayTimer;
     public int stageRate;       //The number of stages needed before stages change
+    public int startSpawnAmount;    //The number of talents that are spawned in the first level (increases with time)
     int stagesUntilChange;
     [SerializeField] int lostTalents;            //Number of talents still on the play field
     int genLeft;
@@ -24,6 +25,7 @@ public class StageManager : MonoBehaviour
     public Transform[] spawnPoints;   //Points at where talents will spawn
 
     [SerializeField] int level = 0;
+    [SerializeField] int stage = 0;
 
     [SerializeField] int score = 0;
     public TextMeshProUGUI scoreText;
@@ -49,9 +51,6 @@ public class StageManager : MonoBehaviour
 
     void Update()
     {
-        //Spawn Logic
-
-
         //Timer
         if(spawnTimer < 0 || lostTalents <= 0)
         {
@@ -64,7 +63,7 @@ public class StageManager : MonoBehaviour
                 if (stagesUntilChange == 0)
                 {
                     DetermineStage();
-                    stagesUntilChange = stageRate;
+                    stagesUntilChange = stageRate-1;
                 }
                 else
                 {
@@ -79,7 +78,7 @@ public class StageManager : MonoBehaviour
                 delayTimer -= Time.deltaTime;
             }
         }
-        else
+        else if(stagesUntilChange != 0)
         {
             spawnTimer -= Time.deltaTime;
         }
@@ -107,7 +106,7 @@ public class StageManager : MonoBehaviour
                     validTalents.Add(talents[2]);   //Mococo
                 }
 
-                for(int i = 0; i < 3; i++)
+                for(int i = 0; i < startSpawnAmount; i++)
                 {
                     GameObject talent = Instantiate(validTalents[Random.Range(0, validTalents.Count)], spawnPoints[0].position, Quaternion.identity);
                     talent.GetComponent<Talent>().SetZ(Random.Range(0, 50f));
@@ -121,7 +120,7 @@ public class StageManager : MonoBehaviour
                 validTalents.Add(talents[1]);   //Bae
                 validTalents.Add(talents[2]);   //Mococo
 
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < startSpawnAmount; i++)
                 {
                     GameObject talent = Instantiate(validTalents[Random.Range(0, validTalents.Count)], spawnPoints[0].position, Quaternion.identity);
                     talent.GetComponent<Talent>().SetZ(Random.Range(0, 50f));
@@ -135,7 +134,7 @@ public class StageManager : MonoBehaviour
                 validTalents.Add(talents[1]);   //Bae
                 validTalents.Add(talents[2]);   //Mococo
 
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < startSpawnAmount; i++)
                 {
                     GameObject talent = Instantiate(validTalents[Random.Range(0, validTalents.Count)], spawnPoints[0].position, Quaternion.identity);
                     talent.GetComponent<Talent>().SetZ(Random.Range(0, 50f));
@@ -149,6 +148,7 @@ public class StageManager : MonoBehaviour
 
     void DetermineStage()
     {
+        stage++;
         //Determine stage
         stageType = (StageType)Random.Range(0, 3);  //Will change depending on number of stage types
         switch (stageType)
@@ -193,23 +193,23 @@ public class StageManager : MonoBehaviour
                 break;
 
             case StageType.boing:
-                int boingLeft = Random.Range(0, 1);         //Done to randomize which side it'll appear on (0 = boing)
+                int boingLeft = Random.Range(0, 2);         //Done to randomize which side it'll appear on (0 = boing)
                 int boingRight = (boingLeft == 0) ? 1 : 0;  //Make sure both are different
 
                 zoneText[0].text = (boingLeft == 0) ? "Boing Boing" : "Pettan...";
-                zones[0].GetComponent<Zone>().SetBoing((boingLeft == 0) ? true : false);
+                zones[0].GetComponent<Zone>().SetBoing((boingLeft == 0));
                 zoneText[1].text = (boingRight == 0) ? "Boing Boing" : "Pettan...";
-                zones[1].GetComponent<Zone>().SetBoing((boingRight == 0) ? true : false);
+                zones[1].GetComponent<Zone>().SetBoing((boingRight == 0));
                 break;
 
             case StageType.kemomimi:
-                int mimiLeft = Random.Range(0, 1);         //Same as with boing
+                int mimiLeft = Random.Range(0, 2);         //Same as with boing
                 int mimiRight = (mimiLeft == 0) ? 1 : 0;
 
-                zoneText[0].text = (mimiLeft == 0) ? "Animal Ears!" : "Human";
-                zones[0].GetComponent<Zone>().SetKemomimi((mimiLeft == 0) ? true : false);
-                zoneText[1].text = (mimiRight == 0) ? "Animal Ears!" : "Human";
-                zones[1].GetComponent<Zone>().SetKemomimi((mimiRight == 0) ? true : false);
+                zoneText[0].text = (mimiLeft == 0) ? "Animal-themed!" : "Human";
+                zones[0].GetComponent<Zone>().SetKemomimi((mimiLeft == 0));
+                zoneText[1].text = (mimiRight == 0) ? "Animal-themed!" : "Human";
+                zones[1].GetComponent<Zone>().SetKemomimi((mimiRight == 0));
                 break;
         }//end of stage initialization
 
@@ -217,6 +217,30 @@ public class StageManager : MonoBehaviour
         zoneText[0].GetComponentInParent<RectTransform>().DORotate(new Vector3(0, 0, 1080), 1f, RotateMode.FastBeyond360).SetEase(Ease.InOutBack);
         zoneText[1].GetComponentInParent<RectTransform>().DORotate(new Vector3(0, 0, 1080), 1f, RotateMode.FastBeyond360).SetEase(Ease.InOutBack);
 
+        //Difficulty scaling (manual for now lol)
+        switch (stage)
+        {
+            //Start:
+            /* spawnRate = 5
+             * delayTime = 1
+             * stageRate = 4
+             * startSpawnAmmount = 2
+             */
+            case 2:
+                spawnRate -= 1f;    // 4
+                stageRate = 3;      // 3
+                break;
+            case 3:
+                spawnRate += 1f;        //5
+                stageRate = 4;
+                startSpawnAmount += 1;  //3
+                break;
+            default:    //nvm i don't wanna make one for every stage lmao
+                spawnRate = Mathf.Clamp(spawnRate - 0.2f, 1f, 10);
+                stageRate = Random.Range(3, 6);
+                if(stage % 2 == 0) startSpawnAmount = Mathf.Clamp(startSpawnAmount + 1, 2, 7);  //increase by 1 every even number stage
+                break;
+        }
     }
 
     public void UpdateScore(int points)
@@ -249,5 +273,10 @@ public class StageManager : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
+    }
+
+    private void OnDisable()
+    {
+        DOTween.Kill(this.gameObject);
     }
 }

@@ -94,7 +94,8 @@ public class Talent : MonoBehaviour
         DOTwalk.SetLoops(-1);
 
         DOTwarning = DOTween.Sequence();
-        DOTwarning.Append(sprite.GetComponent<SpriteRenderer>().DOColor(Color.red, warningTime)).SetEase(Ease.Flash, 15);
+        DOTwarning.Append(sprite.GetComponent<SpriteRenderer>().DOColor(Color.red, warningTime)).SetEase(Ease.InFlash, 12);
+        DOTwarning.SetUpdate(true);
         DOTwarning.Pause();
     }
 
@@ -105,11 +106,17 @@ public class Talent : MonoBehaviour
         {
             timer -= Time.deltaTime;
         }
-        else
+        else 
         {
-            DOTwiggle.Kill();               //Remove animations
-            if (scorable) { stageManager.UpdateScore(-1); }  //Game Over
-            Destroy(this.gameObject);       //temporary destroy
+            if (scorable) //Talent runs out of time in playfield
+            { 
+                stageManager.UpdateScore(-1);
+                TalentPlaced(false);
+            } 
+            else //Talent runs out of time in zone
+            {
+                Destroy(this.gameObject, 1f);
+            }
         }
 
         if(timer <= warningTime && !warning)
@@ -270,48 +277,19 @@ public class Talent : MonoBehaviour
             switch (zone.GetStageType())
             {
                 case 0: //Gen
-                    if (zone.GetGenType() == (int)gen)
-                    {
-                        stageManager.UpdateScore(1);
-                        timer = zoneTime;
-                    }
-                    else
-                    {
-                        stageManager.UpdateScore(-1);
-                    }
-                    stageManager.UpdateLostTalents(-1);
+                    TalentPlaced(zone.GetGenType() == (int)gen);
                     break;
                 case 1: //Boing
-                    if (zone.GetBoing() == boing)
-                    {
-                        stageManager.UpdateScore(1);
-                        timer = zoneTime;
-                    }
-                    else
-                    {
-                        stageManager.UpdateScore(-1);
-                    }
-                    stageManager.UpdateLostTalents(-1);
+                    TalentPlaced(zone.GetBoing() == boing);
                     break;
                 case 2: //kemomimi
-                    if (zone.GetKemomimi() == kemomimi)
-                    {
-                        stageManager.UpdateScore(1);
-                        timer = zoneTime;
-                    }
-                    else
-                    {
-                        stageManager.UpdateScore(-1);
-                    }
-                    stageManager.UpdateLostTalents(-1);
+                    TalentPlaced(zone.GetKemomimi() == kemomimi);
                     break;
             }
             pickable = false;
             scorable = false;
             DisplayWarning(false);
         }
-
-        //Destroy(this.gameObject);   //temporary destroy
     }
 
     private void OnTriggerStay2D(Collider2D col)
@@ -346,5 +324,34 @@ public class Talent : MonoBehaviour
         }
     }
 
+    void TalentPlaced(bool correct)
+    {
+        scorable = false;
+        Sequence DOTwiggleFast = DOTween.Sequence();
+        //sprite.GetComponent<SpriteRenderer>().color = Color.white;
 
+        if (correct)
+        {
+            stageManager.UpdateScore(1);
+            timer = zoneTime;
+        }
+        else
+        {
+            stageManager.UpdateScore(-1);
+            wiggleDuration = 0.5f;
+            DOTwiggleFast.Append(transform.DORotate(new Vector3(0, 0, -wiggleAngle), wiggleDuration / 4).SetEase(Ease.OutSine));
+            DOTwiggleFast.Append(transform.DORotate(new Vector3(0, 0, wiggleAngle), wiggleDuration / 2).SetEase(Ease.InOutSine));
+            DOTwiggleFast.Append(transform.DORotate(new Vector3(0, 0, 0), wiggleDuration / 4).SetEase(Ease.InSine));
+            DOTwiggleFast.SetLoops(-1).SetUpdate(true);
+
+            SetZ(-5f);  //Show above every other talent
+        }
+
+        stageManager.UpdateLostTalents(-1);
+    }
+
+    private void OnDisable()
+    {
+        DOTween.Kill(this.gameObject);
+    }
 }

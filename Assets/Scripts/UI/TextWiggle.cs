@@ -24,4 +24,8 @@ public class TextWiggle : MonoBehaviour
         DOTwiggle.SetLoops(-1).SetUpdate(true);
     }
 
+    private void OnDisable()
+    {
+        DOTween.Kill(this.gameObject);
+    }
 }

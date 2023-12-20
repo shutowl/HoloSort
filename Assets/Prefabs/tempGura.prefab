@@ -350,6 +350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   startTime: 10
+  zoneTime: 15
   maxSpeed: 3
   minSpeed: 5
   wiggleAngle: 10
@@ -365,5 +366,5 @@ MonoBehaviour:
   heldSprite: {fileID: 908513475, guid: 74e6b5d22154bc44db9814f946e74a0f, type: 3}
   startRandomDirection: 0
   gen: 0
-  kemomimi: 0
+  kemomimi: 1
   boing: 0

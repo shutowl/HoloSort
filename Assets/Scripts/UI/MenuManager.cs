@@ -28,7 +28,7 @@ public class MenuManager : MonoBehaviour
 
     private void Awake()
     {
-        AudioManager.Instance.PlayMusic("MainBGM");
+        //AudioManager.Instance.PlayMusic("MainBGM");
         moving = false;
         movingTimer = canvasMoveDuration;
         screenTransition = FindObjectOfType<ScreenTransition>();
@@ -49,6 +49,8 @@ public class MenuManager : MonoBehaviour
 
     public void StartGame()
     {
+        AudioManager.Instance.Play("Start");
+
         screenTransition.Zoom(true);
         screenTransition.Spin(true);
         StartCoroutine(DelayedStart(screenTransition.GetDuration()));
@@ -108,5 +110,10 @@ public class MenuManager : MonoBehaviour
                 Debug.Log("Canvas Move direction invalid!");
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        DOTween.Kill(this.gameObject);
     }
 }

@@ -350,6 +350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   startTime: 10
+  zoneTime: 15
   maxSpeed: 3
   minSpeed: 5
   wiggleAngle: 10

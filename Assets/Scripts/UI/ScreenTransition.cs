@@ -16,6 +16,8 @@ public class ScreenTransition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DOTzoom = DOTween.Sequence();
+        DOTspin = DOTween.Sequence();
         logoRect = GetComponent<RectTransform>();
 
         if(SceneManager.GetActiveScene().buildIndex == 1)
@@ -30,7 +32,6 @@ public class ScreenTransition : MonoBehaviour
 
     public void Zoom(bool zoomIn)
     {
-        DOTzoom.Kill();
         if (zoomIn)
         {
             DOTzoom.Append(logoRect.DOScale(7f, transitionDuration).SetEase(Ease.InOutCubic));
@@ -39,12 +40,12 @@ public class ScreenTransition : MonoBehaviour
         {
             DOTzoom.Append(logoRect.DOScale(0f, transitionDuration).SetEase(Ease.InOutCubic));
         }
+        DOTzoom.SetUpdate(true);
         DOTzoom.Play();
     }
 
     public void Spin(bool clockwise)
     {
-        DOTspin.Kill();
         if (clockwise)
         {
             DOTspin.Append(logoRect.DOLocalRotate(new Vector3(0, 0, -1800f), transitionDuration, RotateMode.FastBeyond360).SetEase(Ease.InOutCubic));
@@ -53,11 +54,17 @@ public class ScreenTransition : MonoBehaviour
         {
             DOTspin.Append(logoRect.DOLocalRotate(new Vector3(0, 0, 1800f), transitionDuration, RotateMode.FastBeyond360).SetEase(Ease.InOutCubic));
         }
+        DOTspin.SetUpdate(true);
         DOTspin.Play();
     }
 
     public float GetDuration()
     {
         return transitionDuration;
+    }
+
+    private void OnDisable()
+    {
+        DOTween.Kill(this.gameObject);
     }
 }
