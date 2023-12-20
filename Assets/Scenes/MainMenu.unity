@@ -9538,8 +9538,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.000016809, y: -580.9654}
-  m_SizeDelta: {x: 498.9415, y: 249.1726}
+  m_AnchoredPosition: {x: 0.000016809, y: -555}
+  m_SizeDelta: {x: 498.9415, y: 273.3859}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1452587166
 MonoBehaviour:
@@ -9561,17 +9561,23 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'The talents are late for their collabs and it''s up to you to guide them
-    to the right room!
+  m_text: 'The talents are late for their off-collabs and it''s up to you to guide
+    them to the right room!
+
+    
+
+    Grab and Hold talents with the [Left Mouse
+    Button] and place them into the room that matches their description.
 
 
-    Grab and Hold talents with the [Left Mouse Button] and
-    place them into one of the rooms.
+    The
+    game will end when you place a talent in the wrong collab, or take too long deciding
+    where a talent should go. Rooms will switch themes every so often so stay on
+    your toes! Sort as many talents as you can before you get overwhelmed!
 
+    
 
-    The game will end when you place a talent
-    in the wrong room, or take too long deciding where a talent should go. Rooms
-    will switch themes every so often so stay on your toes!'
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c136ca3b47a15f64e9e496b9a162e16d, type: 2}
   m_sharedMaterial: {fileID: 334917675609050396, guid: c136ca3b47a15f64e9e496b9a162e16d, type: 2}
@@ -9684,7 +9690,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.000019073, y: -176}
+  m_AnchoredPosition: {x: 0.000019073, y: -140}
   m_SizeDelta: {x: 364.7271, y: 51.2001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1468974199
