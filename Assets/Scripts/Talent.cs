@@ -115,6 +115,7 @@ public class Talent : MonoBehaviour
             } 
             else //Talent runs out of time in zone
             {
+                sprite.GetComponent<SpriteRenderer>().color = Color.white;
                 Destroy(this.gameObject, 1f);
             }
         }

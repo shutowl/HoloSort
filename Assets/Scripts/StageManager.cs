@@ -86,7 +86,10 @@ public class StageManager : MonoBehaviour
 
     //Spawn talents depending on the stage
     //Certain talents cannot spawn during certain stages because of this
+    //If a talent's trait is ambiguous to the theme, they should be excluded from it too. (Like Ina or Nerissa with Animal-themed)
     //More talents will also spawn depending on level
+
+    //Order will be based on the official site's ordering: [HoloEN] https://hololive.hololivepro.com/en/talents?gp=english
     void SpawnTalents(StageType stage)
     {
         List<GameObject> validTalents = new();
@@ -95,15 +98,27 @@ public class StageManager : MonoBehaviour
             case StageType.generation:
                 if(genLeft == 0 || genRight == 0)   //Myth
                 {
-                    validTalents.Add(talents[0]);   //Gura
+                    validTalents.Add(talents[0]);   //Calli
+                    validTalents.Add(talents[1]);   //Kiara
+                    validTalents.Add(talents[2]);   //Ina
+                    validTalents.Add(talents[3]);   //Gura
+                    validTalents.Add(talents[4]);   //Ame
                 }
                 if(genLeft == 1 || genRight == 1)   //Promise
                 {
-                    validTalents.Add(talents[1]);   //Bae
+                    validTalents.Add(talents[5]);   //Irys
+                    validTalents.Add(talents[6]);   //Fauna
+                    validTalents.Add(talents[7]);   //Kronii
+                    validTalents.Add(talents[8]);   //Mumei
+                    validTalents.Add(talents[9]);   //Bae
                 }
                 if(genLeft == 2 || genRight == 2)
                 {
-                    validTalents.Add(talents[2]);   //Mococo
+                    validTalents.Add(talents[10]);   //Shiori
+                    validTalents.Add(talents[11]);   //Biboo
+                    validTalents.Add(talents[12]);   //Nerissa
+                    validTalents.Add(talents[13]);   //Fuwawa
+                    validTalents.Add(talents[14]);   //Mococo
                 }
 
                 for(int i = 0; i < startSpawnAmount; i++)
@@ -116,9 +131,10 @@ public class StageManager : MonoBehaviour
                 zones[1].GetComponent<Zone>().SetStage(0);
                 break;
             case StageType.boing:
-                validTalents.Add(talents[0]);   //Gura
-                validTalents.Add(talents[1]);   //Bae
-                validTalents.Add(talents[2]);   //Mococo
+                for(int i = 0; i < talents.Length; i++)
+                {
+                    validTalents.Add(talents[i]);   //Add all talents
+                }
 
                 for (int i = 0; i < startSpawnAmount; i++)
                 {
@@ -130,9 +146,23 @@ public class StageManager : MonoBehaviour
                 zones[1].GetComponent<Zone>().SetStage(1);
                 break;
             case StageType.kemomimi:
-                validTalents.Add(talents[0]);   //Gura
-                validTalents.Add(talents[1]);   //Bae
-                validTalents.Add(talents[2]);   //Mococo
+                validTalents.Add(talents[0]);   //Calli
+                validTalents.Add(talents[1]);   //Kiara
+                //validTalents.Add(talents[2]);   //Ina     >Ambiguous between tako or human
+                validTalents.Add(talents[3]);   //Gura
+                validTalents.Add(talents[4]);   //Ame
+
+                validTalents.Add(talents[5]);   //Irys
+                validTalents.Add(talents[6]);   //Fauna
+                validTalents.Add(talents[7]);   //Kronii
+                validTalents.Add(talents[8]);   //Mumei
+                validTalents.Add(talents[9]);   //Bae
+
+                validTalents.Add(talents[10]);   //Shiori
+                validTalents.Add(talents[11]);   //Biboo
+                //validTalents.Add(talents[12]);   //Nerissa    >Ambiguous between raven or demon
+                validTalents.Add(talents[13]);   //Fuwawa
+                validTalents.Add(talents[14]);   //Mococo
 
                 for (int i = 0; i < startSpawnAmount; i++)
                 {
@@ -271,6 +301,7 @@ public class StageManager : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        PlayerPrefs.SetInt("score", score);
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }

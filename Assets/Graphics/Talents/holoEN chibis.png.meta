@@ -1,0 +1,797 @@
+fileFormatVersion: 2
+guid: d5892c394bd6f72409b1112042dcd146
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 500
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: gura_stand
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 4278
+        width: 698
+        height: 871
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45c3f3741ea7fc044aef1b0e1892949b
+      internalID: -1392565224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gura_hold
+      rect:
+        serializedVersion: 2
+        x: 818
+        y: 4335
+        width: 845
+        height: 747
+      alignment: 9
+      pivot: {x: 0.57591414, y: 0.8275916}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2464d7d5f9bbc25418df63a150f8d3af
+      internalID: 1475710015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: irys_stand
+      rect:
+        serializedVersion: 2
+        x: 1826
+        y: 4296
+        width: 646
+        height: 858
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41a569ea7850c4c45822a31c518a1185
+      internalID: 155309144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: irys_hold
+      rect:
+        serializedVersion: 2
+        x: 2542
+        y: 4322
+        width: 678
+        height: 773
+      alignment: 9
+      pivot: {x: 0.49490583, y: 0.8797792}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7243725dae27fa64eaeabbe3846de33f
+      internalID: -2125253723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shiori_stand
+      rect:
+        serializedVersion: 2
+        x: 3652
+        y: 4276
+        width: 531
+        height: 842
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e8005e7f7e3c074493bf09c43c91b9e
+      internalID: 1984153334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shiori_hold
+      rect:
+        serializedVersion: 2
+        x: 4343
+        y: 4366
+        width: 637
+        height: 677
+      alignment: 9
+      pivot: {x: 0.48915586, y: 0.8622109}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cce1f2354f323a34bbf9d9fdb93508d2
+      internalID: 1677409497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ina_stand
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 3294
+        width: 540
+        height: 940
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 592b58ff9a96bfe4687a93d0ba24b597
+      internalID: -2142930630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ina_hold
+      rect:
+        serializedVersion: 2
+        x: 826
+        y: 3348
+        width: 665
+        height: 820
+      alignment: 9
+      pivot: {x: 0.48928204, y: 0.8447855}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d46c882f31525e048b42d0c19fc0673f
+      internalID: 248670493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fauna_stand
+      rect:
+        serializedVersion: 2
+        x: 1848
+        y: 3281
+        width: 580
+        height: 884
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e528297c9ae2ece42b9f7b03fa0b47bb
+      internalID: -1892625121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fauna_hold
+      rect:
+        serializedVersion: 2
+        x: 2506
+        y: 3330
+        width: 711
+        height: 780
+      alignment: 9
+      pivot: {x: 0.5, y: 0.82766426}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 916acc91b5fc36846a2a4c3f5ccfb62f
+      internalID: 1006851824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: biboo_stand
+      rect:
+        serializedVersion: 2
+        x: 3510
+        y: 3292
+        width: 765
+        height: 872
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73d4209030f8f2b44877f5986cad7d92
+      internalID: 547281199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: biboo_hold
+      rect:
+        serializedVersion: 2
+        x: 4286
+        y: 3394
+        width: 730
+        height: 720
+      alignment: 9
+      pivot: {x: 0.50946194, y: 0.8453756}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a73fcc41f550014e81027d332ec5ff0
+      internalID: -2127645216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calli_stand
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 2213
+        width: 547
+        height: 847
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 898221532d25ed94d89d7246e7a07bc6
+      internalID: 1999471476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calli_hold
+      rect:
+        serializedVersion: 2
+        x: 872
+        y: 2287
+        width: 627
+        height: 706
+      alignment: 9
+      pivot: {x: 0.48484322, y: 0.83315516}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 110e91f10989ea746b29cf67866143c9
+      internalID: 1951956988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kronii_stand
+      rect:
+        serializedVersion: 2
+        x: 1816
+        y: 2254
+        width: 659
+        height: 866
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 734bdd3afd5b1b04c81634c4c9164e44
+      internalID: 1260607112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kronii_hold
+      rect:
+        serializedVersion: 2
+        x: 2527
+        y: 2352
+        width: 711
+        height: 711
+      alignment: 9
+      pivot: {x: 0.5048574, y: 0.8108868}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba1cd3a058581714f83181e73fba0647
+      internalID: 419019763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerissa_stand
+      rect:
+        serializedVersion: 2
+        x: 3631
+        y: 2231
+        width: 619
+        height: 930
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 390a2c6a9995b2d4e9cfae978bc3ca2e
+      internalID: 1070162953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nerissa_hold
+      rect:
+        serializedVersion: 2
+        x: 4317
+        y: 2331
+        width: 683
+        height: 789
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7582658}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dde25667daab67f47924256f358734b1
+      internalID: -1337142844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kiara_stand
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 1175
+        width: 588
+        height: 925
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d68bc6d11cb73dd4293380c5d074fcda
+      internalID: -1828306827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kiara_hold
+      rect:
+        serializedVersion: 2
+        x: 823
+        y: 1275
+        width: 681
+        height: 779
+      alignment: 9
+      pivot: {x: 0.5, y: 0.8080348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29c6f09a5f0febc43a2b4edd5c3e64c3
+      internalID: -1738712987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mumei_stand
+      rect:
+        serializedVersion: 2
+        x: 1882
+        y: 1185
+        width: 601
+        height: 974
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8ec6a5773528fe4fa2443283922f749
+      internalID: 702589497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mumei_hold
+      rect:
+        serializedVersion: 2
+        x: 2601
+        y: 1230
+        width: 655
+        height: 857
+      alignment: 9
+      pivot: {x: 0.48945424, y: 0.79419386}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa9d63473e36d264fab8a95d77e8a3a4
+      internalID: 589862568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fuwawa_stand
+      rect:
+        serializedVersion: 2
+        x: 3608
+        y: 1219
+        width: 699
+        height: 914
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69ad2572cb2f20344b8dc65c56bce13c
+      internalID: -1430261716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fuwawa_hold
+      rect:
+        serializedVersion: 2
+        x: 4356
+        y: 1319
+        width: 806
+        height: 768
+      alignment: 9
+      pivot: {x: 0.5085698, y: 0.78331614}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c233a890e9cca04f8bf8e495b47a5d1
+      internalID: -352614103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ame_stand
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 140
+        width: 547
+        height: 901
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec0556c8f491fca41b068848f5f14e0c
+      internalID: -651310760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ame_hold
+      rect:
+        serializedVersion: 2
+        x: 849
+        y: 240
+        width: 660
+        height: 735
+      alignment: 9
+      pivot: {x: 0.48200127, y: 0.8006156}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dedbf90ee82e624fbc984bfde0c9252
+      internalID: -693052222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bae_stand
+      rect:
+        serializedVersion: 2
+        x: 1838
+        y: 143
+        width: 755
+        height: 945
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85e8ec7ff67179e498698ed9ef8f5ab1
+      internalID: 2002271373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bae_hold
+      rect:
+        serializedVersion: 2
+        x: 2634
+        y: 299
+        width: 915
+        height: 779
+      alignment: 9
+      pivot: {x: 0.47403464, y: 0.80498487}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15e239bf2aeeb6f4bb8ca05c41bac96c
+      internalID: 2015262423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mococo_stand
+      rect:
+        serializedVersion: 2
+        x: 3652
+        y: 197
+        width: 670
+        height: 916
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f23d8777fbd67fc448eec3acef93c711
+      internalID: -973703572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mococo_hold
+      rect:
+        serializedVersion: 2
+        x: 4384
+        y: 281
+        width: 827
+        height: 776
+      alignment: 9
+      pivot: {x: 0.50766313, y: 0.79399264}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de02f948f72e3324b9fd19f2e89b8d7a
+      internalID: -1473216707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      ame_hold: -693052222
+      ame_stand: -651310760
+      bae_hold: 2015262423
+      bae_stand: 2002271373
+      biboo_hold: -2127645216
+      biboo_stand: 547281199
+      calli_hold: 1951956988
+      calli_stand: 1999471476
+      fauna_hold: 1006851824
+      fauna_stand: -1892625121
+      fuwawa_hold: -352614103
+      fuwawa_stand: -1430261716
+      gura_hold: 1475710015
+      gura_stand: -1392565224
+      holoEN chibis_28: 845846378
+      holoEN chibis_4: -1358376650
+      ina_hold: 248670493
+      ina_stand: -2142930630
+      irys_hold: -2125253723
+      irys_stand: 155309144
+      kiara_hold: -1738712987
+      kiara_stand: -1828306827
+      kronii_hold: 419019763
+      kronii_stand: 1260607112
+      mococo_hold: -1473216707
+      mococo_stand: -973703572
+      mumei_hold: 589862568
+      mumei_stand: 702589497
+      nerissa_hold: -1337142844
+      nerissa_stand: 1070162953
+      shiori_hold: 1677409497
+      shiori_stand: 1984153334
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
