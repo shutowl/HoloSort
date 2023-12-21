@@ -1,4 +1,4 @@
-<p>*copy-pasted from the itch.io page*&nbsp;</p>
+<p>*copy-pasted from the itch.io page: https://kshut.itch.io/holosort *&nbsp;</p>
 <p>Made within 7 days for the HoloJam #2 game jam!&nbsp;</p>
 <p>Heavily inspired by that one minigame in New Super Mario Bros called Sort or 'Splode.<br></p>
 <p>Also playable on mobile! (hopefully. just tap the fullscreen button on the bottom right)</p>
