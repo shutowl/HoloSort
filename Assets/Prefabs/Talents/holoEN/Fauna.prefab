@@ -366,5 +366,5 @@ MonoBehaviour:
   heldSprite: {fileID: 1006851824, guid: d5892c394bd6f72409b1112042dcd146, type: 3}
   startRandomDirection: 0
   gen: 1
-  kemomimi: 0
+  kemomimi: 1
   boing: 1
