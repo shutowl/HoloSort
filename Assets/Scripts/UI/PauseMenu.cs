@@ -38,12 +38,13 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Time.timeScale = 1;
+        CursorManager.Instance.ChangeCursor("Default");
         SceneManager.LoadScene(0);
-
     }
 
     public void MouseOverButton()
     {
         AudioManager.Instance.Play("MenuClick");
+        CursorManager.Instance.ChangeCursor("Default");
     }
 }

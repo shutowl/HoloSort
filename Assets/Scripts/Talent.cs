@@ -30,6 +30,9 @@ public class Talent : MonoBehaviour
     public float walkDistance = 0.3f;
     Sequence DOTwiggle;
 
+    //Highlight
+    private Color highlightColor;
+
     bool warning = false;
     public float warningTime = 2f;          //The warning will pop after when there's only this much time left
     public float warningFlashRate = 0.2f;   //The warning indicator will flash every X seconds.
@@ -60,6 +63,8 @@ public class Talent : MonoBehaviour
 
     void Start()
     {
+        SetZ(Random.Range(-0f, 50f));
+        highlightColor = new Color(255f/255f, 235f/255f, 122f/255f, 1f);
         startDirection = new Vector3(Random.Range(-4f, 4f), -5f).normalized;
         curDirection = startDirection;
         if(startRandomDirection) { curDirection = new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f)).normalized; }
@@ -239,6 +244,7 @@ public class Talent : MonoBehaviour
             DOTwalk.Pause();
 
             AudioManager.Instance.Play("Grab");
+            CursorManager.Instance.ChangeCursor("Hold");
         }
     }
 
@@ -259,6 +265,26 @@ public class Talent : MonoBehaviour
 
             DOTwiggle.Restart();
             DOTwiggle.Pause();
+
+            CursorManager.Instance.ChangeCursor("Open");
+        }
+    }
+
+    private void OnMouseEnter()
+    {
+        if (pickable)
+        {
+            //Highlight or Outline talent
+            sprite.GetComponent<SpriteRenderer>().color = highlightColor;
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        if (pickable)
+        {
+            //Remove highlight or outline
+            sprite.GetComponent<SpriteRenderer>().color = Color.white;
         }
     }
 
@@ -266,6 +292,11 @@ public class Talent : MonoBehaviour
     public void SetZ(float z)
     {
         transform.position = new Vector3(transform.position.x, transform.position.y, z);
+    }
+
+    public float GetTimeLeft()
+    {
+        return timer;
     }
 
 
@@ -319,7 +350,7 @@ public class Talent : MonoBehaviour
                     {
                         transform.position = new Vector2(-13.5f, 0);
                     }
-
+                    sprite.GetComponent<SpriteRenderer>().color = Color.white;
                 }
             }
         }
@@ -348,7 +379,9 @@ public class Talent : MonoBehaviour
             SetZ(-5f);  //Show above every other talent
         }
 
+        transform.gameObject.tag = "TalentScored";
         stageManager.UpdateLostTalents(-1);
+        sprite.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     private void OnDisable()

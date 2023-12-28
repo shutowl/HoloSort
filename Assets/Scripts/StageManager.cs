@@ -4,12 +4,13 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class StageManager : MonoBehaviour
 {
     public enum StageType { generation, boing, kemomimi}
     StageType stageType;        //Determines what kind of collabs (zones) will be on stage
-    public float spawnRate;     //Rate at which more talents spawn (may lower as level increases)
+    public float spawnRate;     //More talents will spawn every [spawnRate] seconds
     float spawnTimer;
     public float delayTime;     //The delay before more talents spawn
     float delayTimer;
@@ -35,6 +36,14 @@ public class StageManager : MonoBehaviour
     public GameObject gameOverMenu;
     public TextMeshProUGUI gameOverScoreText;
 
+    [Header("Other UI Elements")]
+    public Slider timeLeftSlider;
+    public GameObject themeChangeText;
+    public float themeChangeDuration = 2f;
+    public GameObject themeText;
+    Sequence DOTThemeChange;
+    Sequence DOTTheme;
+
     void Start()
     {
         //Initialize variables
@@ -44,14 +53,27 @@ public class StageManager : MonoBehaviour
 
         gameOverMenu.SetActive(false);
 
-        //Start Text animations
-
         DetermineStage();
+        switch (stageType)
+        {
+            case StageType.generation:
+                themeText.GetComponent<TextMeshProUGUI>().text = "Generation?";
+                break;
+            case StageType.boing:
+                themeText.GetComponent<TextMeshProUGUI>().text = "Cup-Size?";
+                break;
+            case StageType.kemomimi:
+                themeText.GetComponent<TextMeshProUGUI>().text = "Animal?";
+                break;
+        }
+
+        timeLeftSlider.minValue = 0;
+        timeLeftSlider.maxValue = talents[0].GetComponent<Talent>().startTime;
     }
 
     void Update()
     {
-        //Timer
+        //Timers
         if(spawnTimer < 0 || lostTalents <= 0)
         {
 
@@ -62,7 +84,7 @@ public class StageManager : MonoBehaviour
 
                 if (stagesUntilChange == 0)
                 {
-                    DetermineStage();
+                    //DetermineStage();     //done in UpdateLostTalents() now
                     stagesUntilChange = stageRate-1;
                 }
                 else
@@ -81,6 +103,12 @@ public class StageManager : MonoBehaviour
         else if(stagesUntilChange != 0)
         {
             spawnTimer -= Time.deltaTime;
+        }
+
+        //Time Left UI
+        if(timeLeftSlider.value > 0 && lostTalents > 0)
+        {
+            timeLeftSlider.value -= Time.deltaTime;
         }
     }
 
@@ -243,10 +271,6 @@ public class StageManager : MonoBehaviour
                 break;
         }//end of stage initialization
 
-         //Spin text
-        zoneText[0].GetComponentInParent<RectTransform>().DORotate(new Vector3(0, 0, 1080), 1f, RotateMode.FastBeyond360).SetEase(Ease.InOutBack);
-        zoneText[1].GetComponentInParent<RectTransform>().DORotate(new Vector3(0, 0, 1080), 1f, RotateMode.FastBeyond360).SetEase(Ease.InOutBack);
-
         //Difficulty scaling (manual for now lol)
         switch (stage)
         {
@@ -292,6 +316,63 @@ public class StageManager : MonoBehaviour
     public void UpdateLostTalents(int num)
     {
         lostTalents += num;
+
+        if(lostTalents == 0 && stagesUntilChange == 0)
+        {
+            //Show theme change warning
+            RectTransform themeChangeRect = themeChangeText.GetComponent<RectTransform>();
+            DOTThemeChange = DOTween.Sequence();
+            DOTThemeChange.Append(themeChangeRect.DOAnchorPosY(Mathf.Abs(themeChangeRect.anchoredPosition.y), themeChangeDuration / 2).SetEase(Ease.OutCubic));
+            DOTThemeChange.Append(themeChangeRect.DOAnchorPosY(-Mathf.Abs(themeChangeRect.anchoredPosition.y), themeChangeDuration / 2).SetEase(Ease.InOutCubic));
+            delayTimer = themeChangeDuration + (delayTime/2);
+
+            //Theme text
+            DOTTheme = DOTween.Sequence();
+            RectTransform themeRect = themeText.GetComponent<RectTransform>();
+            DOTTheme.Append(themeRect.DOAnchorPosY(3f, themeChangeDuration / 2).SetEase(Ease.OutCubic));
+            DOTTheme.Append(themeRect.DOAnchorPosY(0f, themeChangeDuration / 2).SetEase(Ease.InOutCubic));
+
+            StartCoroutine(DelayedTextChange(themeChangeDuration / 2));
+
+            DetermineStage();
+            //Spin text
+            zoneText[0].GetComponentInParent<RectTransform>().DORotate(new Vector3(0, 0, 1080), 1.5f, RotateMode.FastBeyond360).SetEase(Ease.OutQuint);
+            zoneText[1].GetComponentInParent<RectTransform>().DORotate(new Vector3(0, 0, -1080), 1.5f, RotateMode.FastBeyond360).SetEase(Ease.OutQuint);
+        }
+
+        //Time remaining UI
+        var foundTalents = GameObject.FindGameObjectsWithTag("Talent");
+
+        float min = talents[0].GetComponent<Talent>().startTime;
+        for (int i = 0; i < foundTalents.Length; i++) //get min value from scorable talents
+        {
+            if (foundTalents[i].GetComponent<Talent>().GetTimeLeft() < min)
+            {
+                min = foundTalents[i].GetComponent<Talent>().GetTimeLeft();
+            }
+            Debug.Log("Checked: " + foundTalents[i].GetComponent<Talent>().GetTimeLeft());
+        }
+        timeLeftSlider.value = min;
+        Debug.Log("Count: " + foundTalents.Length);
+        Debug.Log("Min: " + min);
+    }
+
+    IEnumerator DelayedTextChange(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        switch (stageType)
+        {
+            case StageType.generation:
+                themeText.GetComponent<TextMeshProUGUI>().text = "Generation?";
+                break;
+            case StageType.boing:
+                themeText.GetComponent<TextMeshProUGUI>().text = "Cup-Size?";
+                break;
+            case StageType.kemomimi:
+                themeText.GetComponent<TextMeshProUGUI>().text = "Animal?";
+                break;
+        }
     }
 
     public StageType GetStageType()

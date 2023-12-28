@@ -41,6 +41,7 @@ public class MenuManager : MonoBehaviour
     private void Awake()
     {
         //AudioManager.Instance.PlayMusic("MainBGM");
+        CursorManager.Instance.ChangeCursor("Default");
         moving = false;
         optionsOpen = false;
         movingTimer = canvasMoveDuration;
@@ -63,6 +64,7 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         AudioManager.Instance.Play("Start");
+        CursorManager.Instance.ChangeCursor("Open");
 
         screenTransition.Zoom(true);
         screenTransition.Spin(true);
@@ -98,6 +100,7 @@ public class MenuManager : MonoBehaviour
     public void MouseOverButton()
     {
         AudioManager.Instance.Play("MenuClick");
+        CursorManager.Instance.ChangeCursor("Default");
     }
 
     public void ClickOptions()
@@ -192,13 +195,13 @@ public class MenuManager : MonoBehaviour
         highscores[4] = PlayerPrefs.GetInt("highscore4");
 
         int recentScore = PlayerPrefs.GetInt("score");
-        Debug.Log("Recent: " + recentScore);
+        //Debug.Log("Recent: " + recentScore);
 
         for(int i = 0; i < highscores.Count; i++)
         {
             if(recentScore > highscores[i])
             {
-                Debug.Log("Compared: " + recentScore + ">" + highscores[i]);
+                //Debug.Log("Compared: " + recentScore + ">" + highscores[i]);
                 highscores.Insert(i, recentScore);
                 highscores.RemoveAt(highscores.Count-1);
 
@@ -222,7 +225,7 @@ public class MenuManager : MonoBehaviour
         {
             debugScore += score + " ";
         }
-        Debug.Log(debugScore);
+        //Debug.Log(debugScore);
 
         PlayerPrefs.SetInt("highscore0", highscores[0]);
         PlayerPrefs.SetInt("highscore1", highscores[1]);
