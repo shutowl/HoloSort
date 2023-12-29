@@ -18,9 +18,9 @@ public class TextHover : MonoBehaviour
         RectTransform rect = GetComponent<RectTransform>();
 
         DOThover = DOTween.Sequence();
-        DOThover.Append(rect.DOAnchorPosY(distance, duration / 4).SetEase(Ease.OutSine));
-        DOThover.Append(rect.DOAnchorPosY(-distance, duration / 2).SetEase(Ease.InOutSine));
-        DOThover.Append(rect.DOAnchorPosY(0, duration / 4).SetEase(Ease.InSine));
+        DOThover.Append(rect.DOAnchorPosY(rect.anchoredPosition.y + distance, duration / 4).SetEase(Ease.OutSine));
+        DOThover.Append(rect.DOAnchorPosY(rect.anchoredPosition.y - distance, duration / 2).SetEase(Ease.InOutSine));
+        DOThover.Append(rect.DOAnchorPosY(rect.anchoredPosition.y, duration / 4).SetEase(Ease.InSine));
         DOThover.SetLoops(-1).SetUpdate(true);
     }
 

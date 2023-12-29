@@ -26,6 +26,9 @@ public class MenuManager : MonoBehaviour
     float BGMVol;
     float SFXVol;
 
+    public Toggle toggleTimer;      //toggle1
+    public Toggle toggleHighlight;  //toggle2
+
     public List<int> highscores = new List<int>(5);
     public TextMeshProUGUI highscoreText;
 
@@ -60,6 +63,15 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    public void EnableTimerBar(bool on)
+    {
+        PlayerPrefs.SetInt("timerBar", (on) ? 1 : 0);   //1 if on, 0 if off
+    }
+
+    public void EnableHighlights(bool on)
+    {
+        PlayerPrefs.SetInt("highlights", (on) ? 1 : 0);
+    }
 
     public void StartGame()
     {
@@ -245,6 +257,9 @@ public class MenuManager : MonoBehaviour
         AudioManager.Instance.ChangeSFXVolume(SFXVol);
 
         UpdateHighScores();
+
+        toggleHighlight.isOn = (PlayerPrefs.GetInt("highlights", 1) == 1);
+        toggleTimer.isOn = (PlayerPrefs.GetInt("timerBar", 1) == 1);
     }
 
     private void OnDisable()
@@ -253,5 +268,8 @@ public class MenuManager : MonoBehaviour
 
         PlayerPrefs.SetFloat("bgmVol", BGMVol);
         PlayerPrefs.SetFloat("sfxVol", SFXVol);
+
+        PlayerPrefs.SetInt("highlights", (toggleHighlight.isOn) ? 1 : 0);
+        PlayerPrefs.SetInt("timerBar", (toggleTimer.isOn) ? 1 : 0);
     }
 }

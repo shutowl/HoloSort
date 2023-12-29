@@ -38,6 +38,7 @@ public class StageManager : MonoBehaviour
 
     [Header("Other UI Elements")]
     public Slider timeLeftSlider;
+    public TextMeshProUGUI timerText;
     public GameObject themeChangeText;
     public float themeChangeDuration = 2f;
     public GameObject themeText;
@@ -67,6 +68,7 @@ public class StageManager : MonoBehaviour
                 break;
         }
 
+        timeLeftSlider.gameObject.SetActive((PlayerPrefs.GetInt("timerBar") == 1));
         timeLeftSlider.minValue = 0;
         timeLeftSlider.maxValue = talents[0].GetComponent<Talent>().startTime;
     }
@@ -109,6 +111,7 @@ public class StageManager : MonoBehaviour
         if(timeLeftSlider.value > 0 && lostTalents > 0)
         {
             timeLeftSlider.value -= Time.deltaTime;
+            timerText.text = timeLeftSlider.value.ToString("00.00");
         }
     }
 
@@ -329,8 +332,8 @@ public class StageManager : MonoBehaviour
             //Theme text
             DOTTheme = DOTween.Sequence();
             RectTransform themeRect = themeText.GetComponent<RectTransform>();
-            DOTTheme.Append(themeRect.DOAnchorPosY(3f, themeChangeDuration / 2).SetEase(Ease.OutCubic));
-            DOTTheme.Append(themeRect.DOAnchorPosY(0f, themeChangeDuration / 2).SetEase(Ease.InOutCubic));
+            DOTTheme.Append(themeRect.DOAnchorPosY(-Mathf.Abs(themeRect.anchoredPosition.y), themeChangeDuration / 2).SetEase(Ease.OutCubic));
+            DOTTheme.Append(themeRect.DOAnchorPosY(Mathf.Abs(themeRect.anchoredPosition.y), themeChangeDuration / 2).SetEase(Ease.InOutCubic));
 
             StartCoroutine(DelayedTextChange(themeChangeDuration / 2));
 
@@ -353,6 +356,7 @@ public class StageManager : MonoBehaviour
             Debug.Log("Checked: " + foundTalents[i].GetComponent<Talent>().GetTimeLeft());
         }
         timeLeftSlider.value = min;
+        timerText.text = timeLeftSlider.value.ToString("00.00");
         Debug.Log("Count: " + foundTalents.Length);
         Debug.Log("Min: " + min);
     }

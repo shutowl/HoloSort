@@ -272,7 +272,7 @@ public class Talent : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (pickable)
+        if (pickable && PlayerPrefs.GetInt("highlights") == 1)
         {
             //Highlight or Outline talent
             sprite.GetComponent<SpriteRenderer>().color = highlightColor;
